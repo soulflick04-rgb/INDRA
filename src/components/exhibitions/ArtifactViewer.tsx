@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, MeshWobbleMaterial, Sparkles, OrbitControls } from "@react-three/drei";
+import { Float, MeshWobbleMaterial, Sparkles } from "@react-three/drei";
 import { useStore } from "@/store/useStore";
 import * as THREE from "three";
 import { Exhibition } from "@/lib/data/exhibitions";
@@ -13,7 +13,19 @@ function AbstractModel({ themeColor, type }: { themeColor: string; type: string 
 
   useFrame((state, delta) => {
     if (!meshRef.current || reducedMotion) return;
+    
+    // Base slow rotation
     meshRef.current.rotation.y += delta * 0.1;
+
+    // Pointer-based tilt (approx 5-8 degrees)
+    const targetX = (state.pointer.y * Math.PI) / 24;
+    const targetY = (state.pointer.x * Math.PI) / 24;
+
+    // Lerp towards the target rotation for smooth feel
+    meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, targetX, 0.1);
+    // Keep the base Y rotation but add the pointer offset
+    const currentBaseY = meshRef.current.rotation.y;
+    meshRef.current.rotation.y = THREE.MathUtils.lerp(currentBaseY, currentBaseY + targetY, 0.1);
   });
 
   return (
@@ -64,13 +76,6 @@ export function ArtifactViewer({ exhibition }: { exhibition: Exhibition }) {
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1.5} color={exhibition.theme.accent} />
         <AbstractModel themeColor={exhibition.theme.accent} type={exhibition.number} />
-        <OrbitControls 
-          enableZoom={false} 
-          enablePan={false} 
-          autoRotate={false}
-          maxPolarAngle={Math.PI / 1.5}
-          minPolarAngle={Math.PI / 3}
-        />
       </Canvas>
       <div className="absolute inset-0 pointer-events-none rounded-2xl border border-brand-white/10 group-hover:border-brand-white/30 transition-colors duration-500 shadow-[inset_0_0_50px_rgba(0,0,0,0.5)]" />
     </div>

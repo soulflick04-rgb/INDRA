@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, MeshDistortMaterial } from "@react-three/drei";
 import { useStore } from "@/store/useStore";
@@ -12,8 +12,17 @@ function RotatingCore() {
 
   useFrame((state, delta) => {
     if (!meshRef.current || reducedMotion) return;
-    meshRef.current.rotation.x += delta * 0.2;
-    meshRef.current.rotation.y += delta * 0.3;
+    
+    // Auto rotation
+    meshRef.current.rotation.x += delta * 0.1;
+    meshRef.current.rotation.y += delta * 0.2;
+
+    // Pointer reactivity (subtle tilt based on mouse position)
+    const targetX = (state.pointer.y * Math.PI) / 4;
+    const targetY = (state.pointer.x * Math.PI) / 4;
+    
+    meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, targetX, 0.05);
+    meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, targetY, 0.05);
   });
 
   return (

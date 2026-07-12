@@ -27,8 +27,8 @@ export default function Home() {
         <YearCounter />
 
         <div id="exhibitions">
-          {exhibitions.map((exhibition, i) => (
-            <ExhibitionSection key={exhibition.id} exhibition={exhibition} index={i} />
+          {exhibitions.map((exhibition) => (
+            <ExhibitionSection key={exhibition.id} exhibition={exhibition} />
           ))}
         </div>
 

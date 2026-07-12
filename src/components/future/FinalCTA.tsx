@@ -19,12 +19,15 @@ export function FinalCTA() {
         </p>
         
         <div className="flex flex-col sm:flex-row items-center gap-6">
-          <a href="#hero" className="group relative overflow-hidden glass-panel px-8 py-4 font-mono text-sm tracking-widest uppercase transition-all hover:bg-brand-white hover:text-brand-black">
+          <button 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} 
+            className="group relative overflow-hidden glass-panel px-8 py-4 font-mono text-sm tracking-widest uppercase transition-all hover:bg-brand-white hover:text-brand-black"
+          >
             <span className="relative z-10 flex items-center gap-2">
               Restart the Journey
               <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
             </span>
-          </a>
+          </button>
           
           <a href="#archive" className="px-8 py-4 font-mono text-sm tracking-widest uppercase text-brand-muted hover:text-brand-cyan transition-colors">
             Explore the Archive

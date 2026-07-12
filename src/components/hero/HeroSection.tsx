@@ -42,6 +42,19 @@ export function HeroSection() {
         scrub: true,
       }
     });
+
+    // Cinematic exit for the portal/artifact
+    gsap.to(".hero-artifact-container", {
+      scale: 0.5,
+      opacity: 0,
+      y: 100,
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      }
+    });
   }, { scope: containerRef, dependencies: [reducedMotion] });
 
   return (
@@ -57,7 +70,9 @@ export function HeroSection() {
         </h2>
       </div>
 
-      <HeroArtifact />
+      <div className="hero-artifact-container absolute inset-0 z-0 flex items-center justify-center">
+        <HeroArtifact />
+      </div>
 
       <div className="hero-content relative z-10 text-center flex flex-col items-center gap-6 px-4 w-full max-w-4xl mx-auto mt-16">
         <motion.div
@@ -69,15 +84,41 @@ export function HeroSection() {
           Interactive Exhibition
         </motion.div>
 
-        <motion.h1 
-          className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold leading-tight"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.4 }}
+        <motion.div 
+          className="font-heading text-5xl md:text-7xl lg:text-8xl font-bold leading-tight flex flex-col gap-2"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.2, delayChildren: 0.4 }
+            }
+          }}
         >
-          <span className="block text-brand-white text-glow">DIGITAL MUSEUM</span>
-          <span className="block text-brand-muted">OF THE FUTURE</span>
-        </motion.h1>
+          <div className="overflow-hidden">
+            <motion.span 
+              variants={{
+                hidden: { y: "100%" },
+                visible: { y: 0, transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }
+              }}
+              className="block text-brand-white text-glow"
+            >
+              DIGITAL MUSEUM
+            </motion.span>
+          </div>
+          <div className="overflow-hidden">
+            <motion.span 
+              variants={{
+                hidden: { y: "100%" },
+                visible: { y: 0, transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }
+              }}
+              className="block text-brand-muted"
+            >
+              OF THE FUTURE
+            </motion.span>
+          </div>
+        </motion.div>
 
         <motion.p 
           className="text-lg md:text-xl text-brand-muted max-w-2xl mt-4 leading-relaxed"

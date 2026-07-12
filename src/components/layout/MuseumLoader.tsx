@@ -9,11 +9,26 @@ export function MuseumLoader() {
   const setLoaderComplete = useStore((state) => state.setLoaderComplete);
 
   useEffect(() => {
+    // Check if we've already loaded this session
+    if (typeof window !== 'undefined' && sessionStorage.getItem('museum_loaded')) {
+      // Defer state update
+      setTimeout(() => {
+        setLoaderComplete(true);
+        setProgress(100);
+      }, 0);
+      return;
+    }
+
     const timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(timer);
-          setTimeout(() => setLoaderComplete(true), 500);
+          setTimeout(() => {
+            if (typeof window !== 'undefined') {
+              sessionStorage.setItem('museum_loaded', 'true');
+            }
+            setLoaderComplete(true);
+          }, 500);
           return 100;
         }
         return prev + Math.floor(Math.random() * 15) + 5;
@@ -29,8 +44,8 @@ export function MuseumLoader() {
     <AnimatePresence>
       {!isComplete && (
         <motion.div
-          exit={{ opacity: 0, y: -50 }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
           className="fixed inset-0 z-[100] bg-brand-black flex flex-col items-center justify-center text-brand-white"
         >
           <div className="w-64 max-w-[80vw]">

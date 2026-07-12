@@ -57,14 +57,31 @@ export function YearCounter() {
     // Animate environment changes as we go into the future
     tl.to(containerRef.current, {
       backgroundColor: "#07111F",
-      duration: 1,
+      duration: 0.8,
     }, 0);
     
     tl.to(".timeline-grid", {
       opacity: 0.2,
       scale: 1.1,
-      duration: 1,
+      duration: 0.8,
     }, 0);
+
+    // Cinematic Welcome to 2050 transition at the very end
+    tl.to(".welcome-overlay", {
+      opacity: 1,
+      duration: 0.2,
+      ease: "power2.inOut"
+    }, 0.8);
+    
+    tl.fromTo(".welcome-text", {
+      scale: 0.8,
+      opacity: 0,
+    }, {
+      scale: 1,
+      opacity: 1,
+      duration: 0.2,
+      ease: "power2.out"
+    }, 0.8);
 
   }, { scope: containerRef, dependencies: [reducedMotion] });
 
@@ -79,15 +96,10 @@ export function YearCounter() {
       <div className="relative z-10 text-center w-full max-w-4xl px-6 flex flex-col md:flex-row items-center justify-between gap-12">
         
         {/* Year Display */}
-        <div className="flex-1 flex flex-col items-center justify-center">
-          <div ref={textRef} className="font-heading font-bold text-8xl md:text-[12rem] leading-none text-glow text-brand-white">
+        <div className="flex-1 flex flex-col items-center justify-center relative">
+          <div ref={textRef} className="font-heading font-bold text-8xl md:text-[12rem] leading-none text-glow text-brand-white transition-opacity duration-300">
             {currentYear}
           </div>
-          {currentYear === 2050 && (
-            <div className="mt-4 font-mono text-xl tracking-widest text-brand-cyan animate-pulse">
-              WELCOME TO 2050
-            </div>
-          )}
         </div>
 
         {/* Milestones List */}
@@ -95,7 +107,6 @@ export function YearCounter() {
           {milestones.map((m, idx) => {
             const isActive = idx === activeMilestone;
             const isPassed = idx < activeMilestone;
-            const isFuture = idx > activeMilestone;
 
             return (
               <div 
@@ -127,11 +138,18 @@ export function YearCounter() {
       </div>
 
       {/* Progress Line */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1px] h-32 bg-brand-white/10">
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1px] h-32 bg-brand-white/10 z-10">
         <div 
           className="w-full bg-brand-cyan" 
           style={{ height: `${((currentYear - 2026) / 24) * 100}%` }}
         />
+      </div>
+
+      {/* Cinematic Transition Overlay */}
+      <div className="welcome-overlay absolute inset-0 z-50 bg-[#07111F] flex items-center justify-center pointer-events-none opacity-0">
+        <div className="welcome-text font-heading text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-purple tracking-wider text-center px-4 drop-shadow-[0_0_30px_rgba(57,231,255,0.4)]">
+          WELCOME TO 2050
+        </div>
       </div>
     </section>
   );
