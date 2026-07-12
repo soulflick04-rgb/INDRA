@@ -33,13 +33,14 @@ export function YearCounter() {
       scrollTrigger: {
         trigger: containerRef.current,
         start: "top top",
-        end: "+=2000",
+        end: "+=2500", // Increased scroll duration
         scrub: 0.5,
         pin: true,
         onUpdate: (self) => {
           const progress = self.progress;
-          const year = Math.floor(2026 + (progress * 24));
-          setCurrentYear(Math.min(year, 2050));
+          // Calculate year smoothly and clamp to prevent flickering
+          const year = Math.min(2050, Math.max(2026, Math.round(2026 + (progress * 24))));
+          setCurrentYear(year);
           
           // Determine active milestone
           const activeIndex = milestones.findIndex(m => m.year === year);
@@ -61,10 +62,18 @@ export function YearCounter() {
     }, 0);
     
     tl.to(".timeline-grid", {
-      opacity: 0.2,
-      scale: 1.1,
+      opacity: 0.3,
+      scale: 1.2,
       duration: 0.8,
     }, 0);
+
+    // Fade out the main content just before the welcome overlay
+    tl.to(".timeline-content", {
+      opacity: 0,
+      scale: 0.95,
+      duration: 0.1,
+      ease: "power2.inOut"
+    }, 0.8);
 
     // Cinematic Welcome to 2050 transition at the very end
     tl.to(".welcome-overlay", {
@@ -93,7 +102,7 @@ export function YearCounter() {
     >
       <div className="timeline-grid absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] opacity-5 transition-all duration-1000" />
       
-      <div className="relative z-10 text-center w-full max-w-4xl px-6 flex flex-col md:flex-row items-center justify-between gap-12">
+      <div className="timeline-content relative z-10 text-center w-full max-w-4xl px-6 flex flex-col md:flex-row items-center justify-between gap-12">
         
         {/* Year Display */}
         <div className="flex-1 flex flex-col items-center justify-center relative">

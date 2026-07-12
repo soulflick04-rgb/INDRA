@@ -92,26 +92,26 @@ export function HeroSection() {
             hidden: { opacity: 0 },
             visible: {
               opacity: 1,
-              transition: { staggerChildren: 0.2, delayChildren: 0.4 }
+              transition: { staggerChildren: 0.3, delayChildren: 0.4 }
             }
           }}
         >
-          <div className="overflow-hidden">
+          <div className="overflow-hidden pb-2">
             <motion.span 
               variants={{
                 hidden: { y: "100%" },
-                visible: { y: 0, transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }
+                visible: { y: 0, transition: { duration: 1.2, ease: [0.83, 0, 0.17, 1] } }
               }}
               className="block text-brand-white text-glow"
             >
               DIGITAL MUSEUM
             </motion.span>
           </div>
-          <div className="overflow-hidden">
+          <div className="overflow-hidden pb-2">
             <motion.span 
               variants={{
                 hidden: { y: "100%" },
-                visible: { y: 0, transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }
+                visible: { y: 0, transition: { duration: 1.2, ease: [0.83, 0, 0.17, 1] } }
               }}
               className="block text-brand-muted"
             >

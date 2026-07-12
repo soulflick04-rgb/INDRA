@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk, JetBrains_Mono, Great_Vibes } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
@@ -23,6 +23,10 @@ const greatVibes = Great_Vibes({
   subsets: ["latin"],
   variable: "--font-great-vibes",
 });
+
+export const viewport: Viewport = {
+  themeColor: "#04060A",
+};
 
 export const metadata: Metadata = {
   title: siteConfig.name,
@@ -49,6 +53,10 @@ export const metadata: Metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     creator: "@rishisrivastav",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

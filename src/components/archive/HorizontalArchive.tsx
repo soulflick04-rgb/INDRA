@@ -68,7 +68,7 @@ export function HorizontalArchive() {
           style={shouldAnimate ? { x } : {}}
           className={clsx(
             "flex gap-8 px-6 pb-12",
-            shouldAnimate ? "w-max" : "flex-wrap justify-center overflow-x-auto snap-x hide-scrollbar"
+            shouldAnimate ? "w-max" : "flex-nowrap overflow-x-auto snap-x snap-mandatory hide-scrollbar w-full"
           )}
         >
           {archiveItems.map((item, index) => {

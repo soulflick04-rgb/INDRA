@@ -15,8 +15,16 @@ export function Footer() {
           <a href="#exhibitions" className="hover:text-brand-cyan transition-colors">Exhibitions</a>
           <a href="#timeline" className="hover:text-brand-cyan transition-colors">Timeline</a>
           <a href="#about" className="hover:text-brand-cyan transition-colors">About</a>
-          <a href="#accessibility" className="hover:text-brand-cyan transition-colors">Accessibility</a>
-          <a href="#credits" className="hover:text-brand-cyan transition-colors">Credits</a>
+          <button 
+            onClick={() => {
+              const el = document.querySelector('button[title="Toggle Reduced Motion"]');
+              if (el) (el as HTMLButtonElement).click();
+            }} 
+            className="text-left hover:text-brand-cyan transition-colors"
+          >
+            Accessibility
+          </button>
+          <a href="#about" className="hover:text-brand-cyan transition-colors">Credits</a>
         </nav>
       </div>
       

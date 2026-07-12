@@ -131,7 +131,7 @@ export function ExhibitionSection({ exhibition }: { exhibition: Exhibition }) {
 
         {/* Right Column: 3D Artifact */}
         <motion.div 
-          className="h-[500px] lg:h-[700px] w-full relative"
+          className="h-[350px] md:h-[500px] lg:h-[700px] w-full relative"
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
