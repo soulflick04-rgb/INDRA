@@ -74,12 +74,7 @@ function AbstractModel({ themeColor, type }: { themeColor: string; type: string 
 export function ArtifactViewer({ exhibition }: { exhibition: Exhibition }) {
   return (
     <div className="w-full h-full relative group" data-interactive="true">
-      <Canvas 
-        camera={{ position: [0, 0, 6], fov: 45 }}
-        eventSource={typeof window !== 'undefined' ? document.body : undefined}
-        eventPrefix="client"
-        style={{ pointerEvents: 'none' }}
-      >
+      <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1.5} color={exhibition.theme.accent} />
         <AbstractModel themeColor={exhibition.theme.accent} type={exhibition.number} />
